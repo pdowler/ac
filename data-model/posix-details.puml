@@ -32,7 +32,7 @@ end note
 
 class BaseUser {
   - identity : Identity
-  - user: PosixUser
+  - posix: PosixUser
 }
 note left of BaseUser
   identity is globally unique, such as:
@@ -52,7 +52,7 @@ BaseUser <|-- User
 
 class BaseGroup {
   - uri : URI
-  - user: PosixGroup
+  - posix: PosixGroup
 }
 BaseGroup -u[hidden]-> User
 note left of BaseGroup
