@@ -1,0 +1,70 @@
+@startuml
+
+top to bottom direction
+
+class PosixUser {
+  - username: String
+  - uid : Integer
+  - home : String
+  - shell : String
+  - group : PosixGroup
+}
+PosixUser -l[hidden]-> BaseUser
+note right of PosixUser
+  username is locally unique
+  uid is locally unique
+  
+  Minimum surprise/friction for user groups:
+  PosixUser.username == PosixGroup.name
+  PosixUser.uid == PosixGroup.gid
+  (but this is not required)
+end note
+
+class PosixGroup {
+  - name : String
+  - gid : Integer
+}
+PosixGroup -l[hidden]-> BaseGroup
+note right of PosixGroup
+  name is locally unique
+  gid is locally unique
+end note
+
+class BaseUser {
+  - identity : Identity
+  - user: PosixUser
+}
+note left of BaseUser
+  identity is globally unique, such as:
+  OpenID {issuer} + {sub}
+  X509 distinguished name
+  etc
+end note
+
+class User {
+  - username : String
+  - emailAddress : String
+  - firstName : String
+  - lastName : String
+}
+BaseUser <|-- User
+'unused: User -u[hidden]-> BaseUser
+
+class BaseGroup {
+  - uri : URI
+  - user: PosixGroup
+}
+BaseGroup -u[hidden]-> User
+note left of BaseGroup
+  uri is globally unique: IVOA Group URI
+end note
+
+class Group {
+  - owner : User
+  - admins : Set
+  - members : Set
+}
+BaseGroup <|-- Group
+'unused: Group -u[hidden]-> BaseGroup
+
+@enduml
