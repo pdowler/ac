@@ -60,8 +60,10 @@ end note
 
 class ManagedGroup {
   - owner : ManagedUser
-  - admins : Set
-  - members : Set
+  - description [0..1]: String
+  - members [0..*]: ManagedUser
+  - memberGroups [0..*]: ManagedGroup
+  - admins : TODO
 }
 Group <|-- ManagedGroup
 
