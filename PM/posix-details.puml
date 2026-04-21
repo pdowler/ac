@@ -9,12 +9,12 @@ class PosixUser {
   - shell : String
   - group : PosixGroup
 }
-PosixUser -l[hidden]-> BaseUser
+PosixUser -l[hidden]-> User
 note right of PosixUser
   username is locally unique
   uid is locally unique
   
-  Minimum surprise/friction for user groups:
+  Minimum surprise/friction for primary group:
   PosixUser.username == PosixGroup.name
   PosixUser.uid == PosixGroup.gid
   (but this is not required)
@@ -24,47 +24,45 @@ class PosixGroup {
   - name : String
   - gid : Integer
 }
-PosixGroup -l[hidden]-> BaseGroup
+PosixGroup -l[hidden]-> Group
 note right of PosixGroup
   name is locally unique
   gid is locally unique
 end note
 
-class BaseUser {
+class User {
   - identity : Identity
   - posix: PosixUser
 }
-note left of BaseUser
+note left of User
   identity is globally unique, such as:
   OpenID {issuer} + {sub}
   X509 distinguished name
   etc
 end note
 
-class User {
+class ManagedUser {
   - username : String
   - emailAddress : String
   - firstName : String
   - lastName : String
 }
-BaseUser <|-- User
-'unused: User -u[hidden]-> BaseUser
+User <|-- ManagedUser
 
-class BaseGroup {
+class Group {
   - uri : URI
   - posix: PosixGroup
 }
-BaseGroup -u[hidden]-> User
-note left of BaseGroup
+Group -u[hidden]-> ManagedUser
+note left of Group
   uri is globally unique: IVOA Group URI
 end note
 
-class Group {
-  - owner : User
+class ManagedGroup {
+  - owner : ManagedUser
   - admins : Set
   - members : Set
 }
-BaseGroup <|-- Group
-'unused: Group -u[hidden]-> BaseGroup
+Group <|-- ManagedGroup
 
 @enduml
