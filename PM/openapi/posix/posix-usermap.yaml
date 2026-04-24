@@ -42,7 +42,10 @@ post:
   parameters:
     - name: user
       in: query
-      description: create and return a posix user entry for the specified user
+      description: |
+        create and return a posix user entry for the specified user; the value is
+        a string representation of the identity and details depend on the identity
+        type(s) in use
       required: false
       schema:
         type: string

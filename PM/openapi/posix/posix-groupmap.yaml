@@ -12,7 +12,7 @@ get:
         type: array
         items:
           type: string
-          examples: 
+        example: 
             - "ivo://foo.net/gms?group1"
             - "ivo://foo.net/gms?group2"
             - "ivo://bar.net/gms?group1"
@@ -43,9 +43,11 @@ post:
     - POSIX Groups
   summary: create a local posix info for a group
   parameters:
-    - name: user
+    - name: group
       in: query
-      description: create and return a posix group entry for the specified group
+      description: |
+        create and return a posix group entry for the specified group;
+        the value is an IVOA Group URI as defined by the GMS standard
       required: false
       schema:
         type: string
