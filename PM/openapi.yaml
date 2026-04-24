@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: POSIX Mapper API
-  version: "1.2"
+  version: "1.0"
   description: |
     The posix mapper API to discover local posix details
     for users and groups
@@ -15,10 +15,10 @@ tags:
 
 paths:
     /usermap:
-        $ref: ./openapi/posix/posix-usermap.yaml
+        $ref: ./openapi/pm/posix-usermap.yaml
 
     /groupmap:
-        $ref: ./openapi/posix/posix-groupmap.yaml
+        $ref: ./openapi/pm/posix-groupmap.yaml
 
     /capabilities:
         $ref: ./openapi/vosi/vosi-capabilities.yaml
